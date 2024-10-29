@@ -66,6 +66,7 @@ let scale = 1;
             isDragging = false; // Остановка перетаскивания при выходе мыши
         });
         
+        
         // Поддержка сенсорных экранов
         let initialDistance = null;
 
