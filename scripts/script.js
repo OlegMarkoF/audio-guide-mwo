@@ -67,24 +67,42 @@ background.addEventListener("mouseleave", () => {
 });
 
 // Поддержка сенсорных экранов
-background.addEventListener("touchstart", (event) => {
-  if (event.touches.length === 1) {
-    // Убедитесь, что только один палец на экране
-    isDragging = true;
-    startX = event.touches[0].clientX - posX;
-    startY = event.touches[0].clientY - posY;
-  }
+let initialDistance = null;
+
+background.addEventListener('touchstart', (event) => {
+    if (event.touches.length === 1) { // Убедитесь, что только один палец на экране
+        isDragging = true;
+        startX = event.touches[0].clientX - posX;
+        startY = event.touches[0].clientY - posY;
+        initialDistance = null; // Сброс расстояния при новом касании
+    } else if (event.touches.length === 2) { // Если два пальца на экране
+        initialDistance = getDistance(event.touches[0], event.touches[1]);
+        isDragging = false; // Остановка перетаскивания при использовании двух пальцев
+    }
 });
 
-background.addEventListener("touchmove", (event) => {
-  if (isDragging && event.touches.length === 1) {
-    posX = event.touches[0].clientX - startX;
-    posY = event.touches[0].clientY - startY;
-    updateTransform();
-    event.preventDefault(); // Предотвращаем прокрутку страницы
-  }
+background.addEventListener('touchmove', (event) => {
+    if (isDragging && event.touches.length === 1) {
+        posX = event.touches[0].clientX - startX;
+        posY = event.touches[0].clientY - startY;
+        updateTransform();
+        event.preventDefault(); // Предотвращаем прокрутку страницы
+    } else if (event.touches.length === 2 && initialDistance !== null) {
+        const currentDistance = getDistance(event.touches[0], event.touches[1]);
+        scale *= currentDistance / initialDistance; // Масштабируем изображение по расстоянию между пальцами
+        scale = Math.min(Math.max(1, scale), 3); // Ограничиваем масштаб от 1 до 3
+        initialDistance = currentDistance; // Обновляем начальное расстояние
+        updateTransform();
+        event.preventDefault(); // Предотвращаем прокрутку страницы
+    }
 });
 
-background.addEventListener("touchend", () => {
-  isDragging = false; // Остановка перетаскивания при отпускании пальца
+background.addEventListener('touchend', () => {
+    isDragging = false; // Остановка перетаскивания при отпускании пальца
 });
+
+function getDistance(touch1, touch2) {
+    const dx = touch2.clientX - touch1.clientX;
+    const dy = touch2.clientY - touch1.clientY;
+    return Math.sqrt(dx * dx + dy * dy); // Расстояние между двумя касаниями
+}
