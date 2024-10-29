@@ -2,17 +2,13 @@ body, html {
   margin: 0;
   padding: 0;
   height: 100%;
-  max-width: 100vw;
   overflow: hidden; /* Скрыть прокрутку */
 }
 
 .background {
-  background: white;
-  background-size: cover;
-  background-position: center;
+  position: relative;
   width: 100%;
   height: 100%;
-  position: relative;
   touch-action: none; /* Отключение жестов по умолчанию */
 }
 
@@ -20,7 +16,7 @@ img {
   position: absolute;
   top: 0;
   left: 0;
-  width: auto; /* Автоматическая ширина для сохранения пропорций */
   height: 100%; /* Высота изображения равна высоте экрана */
-  transform-origin: center; /* Точка масштабирования */
+  width: auto; /* Автоматическая ширина для сохранения пропорций */
+  transform-origin: top left; /* Центрирование точки масштабирования */
 }
