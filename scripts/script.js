@@ -22,7 +22,7 @@ let scale = 1;
             const bgRect = background.getBoundingClientRect();
 
             if (imageRect.left > bgRect.left) {
-                posX = bgRect.left;
+                posX = bgRect.left - imageRect.width;
             }
             if (imageRect.right < bgRect.right) {
                 posX = bgRect.right - imageRect.width;
@@ -78,7 +78,6 @@ let scale = 1;
             } else if (event.touches.length === 2) { // Если два пальца на экране
                 initialDistance = getDistance(event.touches[0], event.touches[1]);
                 isDragging = false; // Остановка перетаскивания при использовании двух пальцев
-                updateCenter(event.touches[0], event.touches[1]); // Обновление центра перед масштабированием
             }
         });
 
@@ -92,11 +91,6 @@ let scale = 1;
                 const currentDistance = getDistance(event.touches[0], event.touches[1]);
                 scale *= currentDistance / initialDistance; // Масштабируем изображение по расстоянию между пальцами
                 scale = Math.min(Math.max(1, scale), 3); // Ограничиваем масштаб от 1 до 3
-
-                const centerPoint = getCenter(event.touches[0], event.touches[1]);
-                posX -= (centerPoint.x - (bgRect.width / 2)) * (scale - 1);
-                posY -= (centerPoint.y - (bgRect.height / 2)) * (scale - 1);
-
                 initialDistance = currentDistance; // Обновляем начальное расстояние
                 updateTransform();
                 event.preventDefault(); // Предотвращаем прокрутку страницы
@@ -111,11 +105,4 @@ let scale = 1;
             const dx = touch2.clientX - touch1.clientX;
             const dy = touch2.clientY - touch1.clientY;
             return Math.sqrt(dx * dx + dy * dy); // Расстояние между двумя касаниями
-        }
-
-        function getCenter(touch1, touch2) {
-            return {
-                x: (touch1.clientX + touch2.clientX) / 2,
-                y: (touch1.clientY + touch2.clientY) / 2,
-            };
         }
