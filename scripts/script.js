@@ -20,7 +20,7 @@ function updateTransform() {
   // Ограничение перемещения по оси X
   const imageRect = image.getBoundingClientRect();
   const bgRect = background.getBoundingClientRect();
-  
+
   if (imageRect.left > bgRect.left) {
     posX = bgRect.left;
   }
@@ -69,40 +69,55 @@ background.addEventListener("mouseleave", () => {
 // Поддержка сенсорных экранов
 let initialDistance = null;
 
-background.addEventListener('touchstart', (event) => {
-    if (event.touches.length === 1) { // Убедитесь, что только один палец на экране
-        isDragging = true;
-        startX = event.touches[0].clientX - posX;
-        startY = event.touches[0].clientY - posY;
-        initialDistance = null; // Сброс расстояния при новом касании
-    } else if (event.touches.length === 2) { // Если два пальца на экране
-        initialDistance = getDistance(event.touches[0], event.touches[1]);
-        isDragging = false; // Остановка перетаскивания при использовании двух пальцев
-    }
+background.addEventListener("touchstart", (event) => {
+  if (event.touches.length === 1) {
+    // Убедитесь, что только один палец на экране
+    isDragging = true;
+    startX = event.touches[0].clientX - posX;
+    startY = event.touches[0].clientY - posY;
+    initialDistance = null; // Сброс расстояния при новом касании
+  } else if (event.touches.length === 2) {
+    // Если два пальца на экране
+    initialDistance = getDistance(event.touches[0], event.touches[1]);
+    isDragging = false; // Остановка перетаскивания при использовании двух пальцев
+    updateCenter(event.touches[0], event.touches[1]); // Обновление центра перед масштабированием
+  }
 });
 
-background.addEventListener('touchmove', (event) => {
-    if (isDragging && event.touches.length === 1) {
-        posX = event.touches[0].clientX - startX;
-        posY = event.touches[0].clientY - startY;
-        updateTransform();
-        event.preventDefault(); // Предотвращаем прокрутку страницы
-    } else if (event.touches.length === 2 && initialDistance !== null) {
-        const currentDistance = getDistance(event.touches[0], event.touches[1]);
-        scale *= currentDistance / initialDistance; // Масштабируем изображение по расстоянию между пальцами
-        scale = Math.min(Math.max(1, scale), 3); // Ограничиваем масштаб от 1 до 3
-        initialDistance = currentDistance; // Обновляем начальное расстояние
-        updateTransform();
-        event.preventDefault(); // Предотвращаем прокрутку страницы
-    }
+background.addEventListener("touchmove", (event) => {
+  if (isDragging && event.touches.length === 1) {
+    posX = event.touches[0].clientX - startX;
+    posY = event.touches[0].clientY - startY;
+    updateTransform();
+    event.preventDefault(); // Предотвращаем прокрутку страницы
+  } else if (event.touches.length === 2 && initialDistance !== null) {
+    const currentDistance = getDistance(event.touches[0], event.touches[1]);
+    scale *= currentDistance / initialDistance; // Масштабируем изображение по расстоянию между пальцами
+    scale = Math.min(Math.max(1, scale), 3); // Ограничиваем масштаб от 1 до 3
+
+    const centerPoint = getCenter(event.touches[0], event.touches[1]);
+    posX -= (centerPoint.x - bgRect.width / 2) * (scale - 1);
+    posY -= (centerPoint.y - bgRect.height / 2) * (scale - 1);
+
+    initialDistance = currentDistance; // Обновляем начальное расстояние
+    updateTransform();
+    event.preventDefault(); // Предотвращаем прокрутку страницы
+  }
 });
 
-background.addEventListener('touchend', () => {
-    isDragging = false; // Остановка перетаскивания при отпускании пальца
+background.addEventListener("touchend", () => {
+  isDragging = false; // Остановка перетаскивания при отпускании пальца
 });
 
 function getDistance(touch1, touch2) {
-    const dx = touch2.clientX - touch1.clientX;
-    const dy = touch2.clientY - touch1.clientY;
-    return Math.sqrt(dx * dx + dy * dy); // Расстояние между двумя касаниями
+  const dx = touch2.clientX - touch1.clientX;
+  const dy = touch2.clientY - touch1.clientY;
+  return Math.sqrt(dx * dx + dy * dy); // Расстояние между двумя касаниями
+}
+
+function getCenter(touch1, touch2) {
+  return {
+    x: (touch1.clientX + touch2.clientX) / 2,
+    y: (touch1.clientY + touch2.clientY) / 2,
+  };
 }
