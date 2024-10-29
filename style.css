@@ -1,0 +1,25 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* Скрыть прокрутку */
+}
+
+.background {
+  background-image: url('./content/img/основной_экран_испр.png');
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  touch-action: none; /* Отключение жестов по умолчанию */
+}
+
+img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: auto; /* Автоматическая ширина для сохранения пропорций */
+  height: 100%; /* Высота изображения равна высоте экрана */
+  transform-origin: top left; /* Точка масштабирования */
+}
