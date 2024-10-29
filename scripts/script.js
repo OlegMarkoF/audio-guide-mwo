@@ -22,7 +22,7 @@ let scale = 1;
             const bgRect = background.getBoundingClientRect();
 
             if (imageRect.left > bgRect.left) {
-                posX = bgRect.left - imageRect.width;
+                posX = bgRect.left;
             }
             if (imageRect.right < bgRect.right) {
                 posX = bgRect.right - imageRect.width;
