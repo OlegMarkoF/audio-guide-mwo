@@ -9,7 +9,7 @@ const background = document.getElementById("background");
 background.addEventListener("wheel", (event) => {
   event.preventDefault();
   scale += event.deltaY * -0.01; // Изменение масштаба
-  scale = Math.min(Math.max(1, scale), 3); // Ограничение масштаба от 1 до 3
+  scale = Math.min(Math.max(1, scale), 5); // Ограничение масштаба от 1 до 3
   updateTransform();
 });
 
@@ -20,20 +20,20 @@ function updateTransform() {
   // Ограничение перемещения по оси X
   const imageRect = image.getBoundingClientRect();
   const bgRect = background.getBoundingClientRect();
-
+  
   if (imageRect.left > bgRect.left) {
-    posX = bgRect.left - imageRect.width * scale;
+    posX = bgRect.left;
   }
   if (imageRect.right < bgRect.right) {
-    posX = bgRect.right - imageRect.width * scale;
+    posX = bgRect.right - imageRect.width;
   }
 
   // Ограничение перемещения по оси Y
   if (imageRect.top > bgRect.top) {
-    posY = bgRect.top - imageRect.height * scale;
+    posY = bgRect.top;
   }
   if (imageRect.bottom < bgRect.bottom) {
-    posY = bgRect.bottom - imageRect.height * scale;
+    posY = bgRect.bottom - imageRect.height;
   }
 
   // Обновляем трансформацию после применения ограничений
