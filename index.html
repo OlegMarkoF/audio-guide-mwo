@@ -11,19 +11,32 @@
   <div class="background" id="background">
     <div id="image" class="img__container">
       <img src="./content/img/территория.png" alt="Фоновое изображение">
-      <div class="audiobox vitiaz">
-        <audio class="audio">
+      <div class="audiobox">
+        <audio class="audio" controls>
           <source src="./content/Аудиогид_Витязь/001.mp3" type="audio/mpeg">
         </audio>
-        <button class="playback" type="submit"></button>
       </div>
-      <div class="audiobox mkk">
-        <audio class="audio">
+      <button class="playback vitiaz" type="submit"></button>
+
+      <div class="audiobox">
+        <audio class="audio" controls>
           <source src="./content/Аудиогид_Витязь/002.mp3" type="audio/mpeg">
         </audio>
-        <button class="playback" type="submit"></button>
       </div>
+      <button class="playback mkk" type="submit"></button>
     </div>
+  </div>
+
+  <!-- Модальное окно -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close_modal">✗</span>
+      <div class="screen-content">
+        <p class="modalText" width="100%"></p>
+      </div>
+
+    </div>
+    <!-- <div id="caption"></div>  <- добавить подпись к фото -->
   </div>
 
   <script src="./scripts/script.js"></script>

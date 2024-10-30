@@ -5,8 +5,12 @@ let posY = 0;
 const image = document.getElementById("image");
 const background = document.getElementById("background");
 const playback = document.querySelectorAll(".playback");
-const audio = document.querySelectorAll(".audio");
+const screenContent = document.querySelector(".screen-content");
+// const audio = document.querySelectorAll(".audio");
+const audiobox = document.querySelectorAll(".audiobox");
 const pause = document.querySelector(".pause");
+const closeButton = document.querySelector(".close_modal");
+const modal = document.querySelector(".modal");
 
 // Увеличение/уменьшение изображения с помощью колесика мыши
 background.addEventListener("wheel", (event) => {
@@ -114,14 +118,14 @@ function getDistance(touch1, touch2) {
 
 function playAudio(i) {
   if (playback[i].classList.contains("play") === false) {
-    audio[i].play();
+    // audio[i].style.display = "block";
+    // audio[i].play();
     playback[i].classList.add("play");
   } else {
-    audio[i].pause();
+    // audio[i].pause();
     playback[i].classList.remove("play");
   }
 }
-
 
 function setVolume(volume) {
   // Установим уровень громкости по вкусу (от 0.0 до 1.0).
@@ -131,5 +135,36 @@ function setVolume(volume) {
 }
 
 for (let i = 0; i < playback.length; i++) {
+  playback[i].addEventListener("click", () => openPopup(i));
   playback[i].addEventListener("click", () => playAudio(i));
 }
+
+const openPopup = (n) => {
+  modal.style.display = "flex";
+  screenContent.innerHTML = audiobox[n].innerHTML;
+  const audio = screenContent.querySelector(".audio");
+  audio.setAttribute('autoplay', true);
+};
+const closePopup = () => {
+  modal.style.display = "none";
+  const audio = screenContent.querySelector(".audio");
+  audio.setAttribute('autoplay', false);
+  audio.pause();
+};
+const closeByEsc = (evt) => {
+  if (evt.key === "Escape") {
+    closePopup();
+  }
+};
+const closeByOverlay = (evt) => {
+  if (evt.target === evt.currentTarget) {
+    closePopup();
+  }
+};
+
+// Закрыть попап
+closeButton.addEventListener("click", closePopup);
+
+// closeButton.addEventListener("click", closePopup);
+modal.addEventListener("click", closeByOverlay);
+window.addEventListener("keyup", closeByEsc);
