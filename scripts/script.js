@@ -136,7 +136,8 @@ function setVolume(volume) {
 
 for (let i = 0; i < playback.length; i++) {
   playback[i].addEventListener("click", () => openPopup(i));
-  playback[i].addEventListener("click", () => playAudio(i));
+  playback[i].addEventListener("touchstart", () => openPopup(i));
+//   playback[i].addEventListener("click", () => playAudio(i));
 }
 
 const openPopup = (n) => {
@@ -164,7 +165,6 @@ const closeByOverlay = (evt) => {
 
 // Закрыть попап
 closeButton.addEventListener("click", closePopup);
-
 // closeButton.addEventListener("click", closePopup);
 modal.addEventListener("click", closeByOverlay);
 window.addEventListener("keyup", closeByEsc);
