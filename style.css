@@ -12,11 +12,41 @@ body, html {
   touch-action: none; /* Отключение жестов по умолчанию */
 }
 
-img {
+#image {
   position: absolute;
   top: 0;
   left: 0;
-  height: 100%; /* Высота изображения равна высоте экрана */
-  width: auto; /* Автоматическая ширина для сохранения пропорций */
+  width: auto;
+  height: 100vh;
   transform-origin: top left; /* Центрирование точки масштабирования */
+}
+
+img {
+  height: 100%; /* Высота изображения равна высоте экрана */
+}
+
+.playback {
+  padding: 20px;
+  border: 2px solid black;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.playback::after {
+  content: '>';
+}
+
+.vitiaz {
+  width: min-content;
+  position: absolute;
+  left: 57%;
+  top: 52%;
+}
+
+
+.mkk {
+  width: min-content;
+  position: absolute;
+  left: 40%;
+  top: 35%;
 }

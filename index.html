@@ -1,15 +1,32 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="background" id="background">
-      <img src="./content/img/основной_экран_испр.png" id="image" alt="Фоновое изображение">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="background" id="background">
+    <div id="image" class="img__container">
+      <img src="./content/img/территория.png" alt="Фоновое изображение">
+      <div class="audiobox vitiaz">
+        <audio class="audio">
+          <source src="./content/Аудиогид_Витязь/001.mp3" type="audio/mpeg">
+        </audio>
+        <button class="playback" type="submit"></button>
+      </div>
+      <div class="audiobox mkk">
+        <audio class="audio">
+          <source src="./content/Аудиогид_Витязь/002.mp3" type="audio/mpeg">
+        </audio>
+        <button class="playback" type="submit"></button>
+      </div>
+    </div>
   </div>
 
-    <script src="./scripts/script.js"></script>
-  </body>
+  <script src="./scripts/script.js"></script>
+</body>
+
 </html>
