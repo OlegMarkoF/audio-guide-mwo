@@ -6,11 +6,14 @@ const image = document.getElementById("image");
 const background = document.getElementById("background");
 const playback = document.querySelectorAll(".playback");
 const screenContent = document.querySelector(".screen-content");
-// const audio = document.querySelectorAll(".audio");
 const audiobox = document.querySelectorAll(".audiobox");
-const pause = document.querySelector(".pause");
 const closeButton = document.querySelector(".close_modal");
 const modal = document.querySelector(".modal");
+const audioPlayer = document.querySelector(".audiotrack");
+const playButton = document.querySelector(".playButton");
+const pauseButton = document.querySelector(".pauseButton");
+const volumeControl = document.querySelector(".volumeControl");
+const progressControl = document.querySelector(".progressControl");
 
 // Увеличение/уменьшение изображения с помощью колесика мыши
 background.addEventListener("wheel", (event) => {
@@ -116,41 +119,29 @@ function getDistance(touch1, touch2) {
   return Math.sqrt(dx * dx + dy * dy); // Расстояние между двумя касаниями
 }
 
-function playAudio(i) {
-  if (playback[i].classList.contains("play") === false) {
-    // audio[i].style.display = "block";
-    // audio[i].play();
-    playback[i].classList.add("play");
-  } else {
-    // audio[i].pause();
-    playback[i].classList.remove("play");
-  }
-}
-
-function setVolume(volume) {
-  // Установим уровень громкости по вкусу (от 0.0 до 1.0).
-  for (let i = 0; i < audio.length; i++) {
-    audio[i].volume = volume;
-  }
-}
-
 for (let i = 0; i < playback.length; i++) {
   playback[i].addEventListener("click", () => openPopup(i));
   playback[i].addEventListener("touchstart", () => openPopup(i));
-//   playback[i].addEventListener("click", () => playAudio(i));
 }
 
 const openPopup = (n) => {
   modal.style.display = "flex";
-  screenContent.innerHTML = audiobox[n].innerHTML;
-  const audio = screenContent.querySelector(".audio");
-  audio.setAttribute('autoplay', true);
+  audioPlayer.innerHTML = audiobox[n].innerHTML;
+  const audio = modal.querySelector(".audio");
+  audio.setAttribute("autoplay", true);
+  // Обновление прогресса аудиодорожки
+  audio.addEventListener("timeupdate", () => {
+    const audio = modal.querySelector(".audio");
+    const progress = (audio.currentTime / audio.duration) * 100; // Вычисляем процент
+    progressControl.value = progress; // Обновляем значение полосы прокрутки
+  });
 };
+
 const closePopup = () => {
+  const audio = modal.querySelector(".audio");
   modal.style.display = "none";
-  const audio = screenContent.querySelector(".audio");
-  audio.setAttribute('autoplay', false);
   audio.pause();
+  //   audioPlayer.innerHTML = "";
 };
 const closeByEsc = (evt) => {
   if (evt.key === "Escape") {
@@ -163,8 +154,41 @@ const closeByOverlay = (evt) => {
   }
 };
 
+function playAudio() {
+  const audio = modal.querySelector(".audio");
+  audio.play();
+}
+
+// Функция обновления прогресса
+function updateProgress() {
+  const audio = modal.querySelector(".audio");
+  const progress = (audio.currentTime / audio.duration) * 100; // Вычисляем процент
+  progressControl.value = progress; // Обновляем значение полосы прокрутки
+}
+
+// Воспроизведение аудио
+playButton.addEventListener("click", playAudio);
+
+// Пауза аудио
+pauseButton.addEventListener("click", () => {
+  const audio = modal.querySelector(".audio");
+  audio.pause();
+});
+
+// Регулировка громкости
+volumeControl.addEventListener("input", function () {
+  const audio = modal.querySelector(".audio");
+  audio.volume = this.value;
+});
+
+// Перемотка аудио по полосе прокрутки
+progressControl.addEventListener("input", function () {
+  const audio = modal.querySelector(".audio");
+  const newTime = (this.value / 100) * audio.duration; // Вычисляем новое время
+  audio.currentTime = newTime; // Устанавливаем новое время воспроизведения
+});
+
 // Закрыть попап
 closeButton.addEventListener("click", closePopup);
-// closeButton.addEventListener("click", closePopup);
 modal.addEventListener("click", closeByOverlay);
 window.addEventListener("keyup", closeByEsc);

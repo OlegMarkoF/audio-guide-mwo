@@ -12,18 +12,19 @@
     <div id="image" class="img__container">
       <img src="./content/img/территория.png" alt="Фоновое изображение">
       <div class="audiobox">
-        <audio class="audio" controls>
+        <audio class="audio">
           <source src="./content/Аудиогид_Витязь/001.mp3" type="audio/mpeg">
         </audio>
       </div>
-      <button class="playback vitiaz" type="submit"></button>
+      <button class="playback vitiaz" type="submit">&#128265;</button>
 
       <div class="audiobox">
-        <audio class="audio" controls>
+        <audio class="audio">
           <source src="./content/Аудиогид_Витязь/002.mp3" type="audio/mpeg">
         </audio>
       </div>
-      <button class="playback mkk" type="submit"></button>
+      <button class="playback mkk" type="submit">&#128265;</button>
+
     </div>
   </div>
 
@@ -32,7 +33,15 @@
     <div class="modal-content">
       <span class="close_modal">✗</span>
       <div class="screen-content">
-        <p class="modalText" width="100%"></p>
+        <div class="audiotrack">
+
+        </div>
+        
+        <button class="playButton">&#9654;</button>
+        <button class="pauseButton">&#9208;</button>
+        <input type="range" class="volumeControl" min="0" max="1" step="0.1" value="1">
+        <input type="range" class="progressControl" value="0" step="0.01">
+        <!-- <p class="modalText" width="100%"></p> -->
       </div>
 
     </div>
