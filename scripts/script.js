@@ -18,9 +18,9 @@ const currentTimeText = document.querySelector(".currentTime__text");
 const durationText = document.querySelector(".duration__text");
 
 // Увеличение/уменьшение изображения с помощью колесика мыши
-background.addEventListener("wheel", (event) => {
-  event.preventDefault();
-  scale += event.deltaY * -0.01; // Изменение масштаба
+background.addEventListener("wheel", (evt) => {
+  evt.preventDefault();
+  scale += evt.deltaY * -0.01; // Изменение масштаба
   scale = Math.min(Math.max(1, scale), 3); // Ограничение масштаба от 1 до 3
   updateTransform();
 });
@@ -56,20 +56,20 @@ function updateTransform() {
 let isDragging = false;
 let startX, startY;
 
-background.addEventListener("mousedown", (event) => {
+background.addEventListener("mousedown", (evt) => {
   isDragging = true;
-  startX = event.clientX - posX;
-  startY = event.clientY - posY;
+  startX = evt.clientX - posX;
+  startY = evt.clientY - posY;
 });
 
 background.addEventListener("mouseup", () => {
   isDragging = false;
 });
 
-background.addEventListener("mousemove", (event) => {
+background.addEventListener("mousemove", (evt) => {
   if (isDragging) {
-    posX = event.clientX - startX;
-    posY = event.clientY - startY;
+    posX = evt.clientX - startX;
+    posY = evt.clientY - startY;
     updateTransform();
   }
 });
@@ -81,33 +81,33 @@ background.addEventListener("mouseleave", () => {
 // Поддержка сенсорных экранов
 let initialDistance = null;
 
-background.addEventListener("touchstart", (event) => {
-  if (event.touches.length === 1) {
+background.addEventListener("touchstart", (evt) => {
+  if (evt.touches.length === 1) {
     // Убедитесь, что только один палец на экране
     isDragging = true;
-    startX = event.touches[0].clientX - posX;
-    startY = event.touches[0].clientY - posY;
+    startX = evt.touches[0].clientX - posX;
+    startY = evt.touches[0].clientY - posY;
     initialDistance = null; // Сброс расстояния при новом касании
-  } else if (event.touches.length === 2) {
+  } else if (evt.touches.length === 2) {
     // Если два пальца на экране
-    initialDistance = getDistance(event.touches[0], event.touches[1]);
+    initialDistance = getDistance(evt.touches[0], evt.touches[1]);
     isDragging = false; // Остановка перетаскивания при использовании двух пальцев
   }
 });
 
-background.addEventListener("touchmove", (event) => {
-  if (isDragging && event.touches.length === 1) {
-    posX = event.touches[0].clientX - startX;
-    posY = event.touches[0].clientY - startY;
+background.addEventListener("touchmove", (evt) => {
+  if (isDragging && evt.touches.length === 1) {
+    posX = evt.touches[0].clientX - startX;
+    posY = evt.touches[0].clientY - startY;
     updateTransform();
-    event.preventDefault(); // Предотвращаем прокрутку страницы
-  } else if (event.touches.length === 2 && initialDistance !== null) {
-    const currentDistance = getDistance(event.touches[0], event.touches[1]);
+    evt.preventDefault(); // Предотвращаем прокрутку страницы
+  } else if (evt.touches.length === 2 && initialDistance !== null) {
+    const currentDistance = getDistance(evt.touches[0], evt.touches[1]);
     scale *= currentDistance / initialDistance; // Масштабируем изображение по расстоянию между пальцами
     scale = Math.min(Math.max(1, scale), 3); // Ограничиваем масштаб от 1 до 3
     initialDistance = currentDistance; // Обновляем начальное расстояние
     updateTransform();
-    event.preventDefault(); // Предотвращаем прокрутку страницы
+    evt.preventDefault(); // Предотвращаем прокрутку страницы
   }
 });
 
@@ -128,7 +128,7 @@ for (let i = 0; i < playback.length; i++) {
 
 
 // Открываем попап
-const openPopup = (n) => {
+function openPopup (n) {
   modal.style.display = "flex";
   audioPlayer.innerHTML = audiobox[n].innerHTML;
   const audio = modal.querySelector(".audio");

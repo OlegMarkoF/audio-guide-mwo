@@ -109,7 +109,7 @@ img {
 .close_modal {
   position: absolute;
   top: -30px;
-  right: -20px;
+  left: 49.5%;
   color: #fff;
   font-weight: 400;
   transition: all 0.2s ease;
