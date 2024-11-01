@@ -138,7 +138,6 @@ for (let i = 0; i < playback.length; i++) {
   });
 }
 
-
 // Открываем попап
 function openPopup (n) {
   modal.style.display = "flex";
@@ -147,13 +146,11 @@ function openPopup (n) {
   audio.setAttribute("autoplay", true);
   // Обновление прогресса аудиодорожки
   audio.addEventListener("timeupdate", () => {
-    const audio = modal.querySelector(".audio");
     const progress = (audio.currentTime / audio.duration) * 100;
     progressControl.value = progress; // Обновляем значение полосы прокрутки
     audio.volume = volumeControl.value; // Обновляем значение уровня громкости
     currentTimeText.textContent = (audio.currentTime/100).toFixed(2);
     durationText.textContent = (audio.duration/100).toFixed(2);
-
   });
 };
 // Функции закрытия попапов
@@ -201,5 +198,7 @@ progressControl.addEventListener("input", function () {
 
 // Закрываем попап
 closeButton.addEventListener("click", closePopup);
-modal.addEventListener("click", closeByOverlay);
+modal.addEventListener("touchstart", closeByOverlay);
 window.addEventListener("keyup", closeByEsc);
+
+
