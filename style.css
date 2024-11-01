@@ -44,31 +44,27 @@ img {
   line-height: 20px;
 }
 
+/* Кнопки открытия попапов и их мостоположение */
 .vitiaz {
   width: min-content;
   position: absolute;
   left: 57%;
   top: 52%;
 }
-
-
 .mkk {
   width: min-content;
   position: absolute;
   left: 40%;
   top: 35%;
 }
+.bpl {
+  width: min-content;
+  position: absolute;
+  left: 10%;
+  top: 40%;
+}
 
 /* модальное окно */
-
-/* .modal::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, .5);
-} */
 .modal {
   display: none;
   position: fixed;
@@ -82,7 +78,6 @@ img {
 }
 .modal-content {
   position: relative;
-  /* margin: 50px 20px; */
   padding: 23px;
   width: 95%;
   max-width: 100%;
@@ -92,7 +87,6 @@ img {
   box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.15);
   animation-name: animate;
   animation-duration: 0.9s
-  /* overflow: hidden; */
 }
 
 @keyframes animate {
@@ -137,23 +131,36 @@ img {
 
 .playButton,
 .pauseButton {
+  width: 40px;
+  height: 40px;
   background-color: #1E90FF;
   color: white;
   border: none;
   padding: 10px;
   cursor: pointer;
-  margin: 5px;
+  margin: 0;
+  border-radius: 50px;
 }
 
 button:hover {
   background-color: #104E8B;
 }
 
-#volumeControl {
-  width: 100px;
+.volumeControl {
+  width: 200px;
   margin: 5px;
 }
 
-#progressControl {
-  width: 300px; /* Ширина полосы прокрутки */
+.progressControl {
+  width: 500px;
+}
+
+.progressAudio {
+  display: flex;
+  align-items: center;
+  color: rgb(41, 41, 41);
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
 }

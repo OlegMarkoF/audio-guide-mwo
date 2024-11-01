@@ -14,6 +14,8 @@ const playButton = document.querySelector(".playButton");
 const pauseButton = document.querySelector(".pauseButton");
 const volumeControl = document.querySelector(".volumeControl");
 const progressControl = document.querySelector(".progressControl");
+const currentTimeText = document.querySelector(".currentTime__text");
+const durationText = document.querySelector(".duration__text");
 
 // Увеличение/уменьшение изображения с помощью колесика мыши
 background.addEventListener("wheel", (event) => {
@@ -124,6 +126,8 @@ for (let i = 0; i < playback.length; i++) {
   playback[i].addEventListener("touchstart", () => openPopup(i));
 }
 
+
+// Открываем попап
 const openPopup = (n) => {
   modal.style.display = "flex";
   audioPlayer.innerHTML = audiobox[n].innerHTML;
@@ -132,16 +136,19 @@ const openPopup = (n) => {
   // Обновление прогресса аудиодорожки
   audio.addEventListener("timeupdate", () => {
     const audio = modal.querySelector(".audio");
-    const progress = (audio.currentTime / audio.duration) * 100; // Вычисляем процент
+    const progress = (audio.currentTime / audio.duration) * 100;
     progressControl.value = progress; // Обновляем значение полосы прокрутки
+    audio.volume = volumeControl.value; // Обновляем значение уровня громкости
+    currentTimeText.textContent = (audio.currentTime/100).toFixed(2);
+    durationText.textContent = (audio.duration/100).toFixed(2);
+
   });
 };
-
+// Функции закрытия попапов
 const closePopup = () => {
   const audio = modal.querySelector(".audio");
   modal.style.display = "none";
   audio.pause();
-  //   audioPlayer.innerHTML = "";
 };
 const closeByEsc = (evt) => {
   if (evt.key === "Escape") {
@@ -154,19 +161,11 @@ const closeByOverlay = (evt) => {
   }
 };
 
+// Воспроизведение аудио
 function playAudio() {
   const audio = modal.querySelector(".audio");
   audio.play();
 }
-
-// Функция обновления прогресса
-function updateProgress() {
-  const audio = modal.querySelector(".audio");
-  const progress = (audio.currentTime / audio.duration) * 100; // Вычисляем процент
-  progressControl.value = progress; // Обновляем значение полосы прокрутки
-}
-
-// Воспроизведение аудио
 playButton.addEventListener("click", playAudio);
 
 // Пауза аудио
@@ -188,7 +187,7 @@ progressControl.addEventListener("input", function () {
   audio.currentTime = newTime; // Устанавливаем новое время воспроизведения
 });
 
-// Закрыть попап
+// Закрываем попап
 closeButton.addEventListener("click", closePopup);
 modal.addEventListener("click", closeByOverlay);
 window.addEventListener("keyup", closeByEsc);
