@@ -126,7 +126,16 @@ background.addEventListener("touchmove", (evt) => {
   } else if (evt.touches.length === 2 && initialDistance !== null) {
     const currentDistance = getDistance(evt.touches[0], evt.touches[1]);
     scale *= currentDistance / initialDistance; // Масштабируем изображение по расстоянию между пальцами
-    scale = Math.min(Math.max(1, scale), 3); // Ограничиваем масштаб от 1 до 3
+    
+    if (evt.deltaY < 0) {
+      scale += 0.1; // Увеличиваем масштаб
+    } else {
+      scale -= 0.1; // Уменьшаем масштаб
+    }
+    
+    // Ограничение масштаба от 0.5 до 3
+    scale = Math.min(Math.max(0.5, scale), 3);
+    // Ограничиваем масштаб от 1 до 3
     initialDistance = currentDistance; // Обновляем начальное расстояние
     updateTransform();
     evt.preventDefault(); // Предотвращаем прокрутку страницы
