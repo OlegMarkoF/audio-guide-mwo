@@ -121,9 +121,21 @@ function getDistance(touch1, touch2) {
   return Math.sqrt(dx * dx + dy * dy); // Расстояние между двумя касаниями
 }
 
+let isTouching = false;
+
 for (let i = 0; i < playback.length; i++) {
-  playback[i].addEventListener("click", () => openPopup(i));
-  playback[i].addEventListener("touchstart", () => openPopup(i));
+  playback[i].addEventListener("click", () => {
+    if (!isTouching) {
+      openPopup(i)
+    }
+    });
+  playback[i].addEventListener("touchstart", () => {
+    isTouching = true;
+    openPopup(i)
+  });
+  playback[i].addEventListener("touchend", () => {
+    isTouching = false;
+  });
 }
 
 
