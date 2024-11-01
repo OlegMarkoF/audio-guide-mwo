@@ -20,36 +20,58 @@ const durationText = document.querySelector(".duration__text");
 // Увеличение/уменьшение изображения с помощью колесика мыши
 background.addEventListener("wheel", (evt) => {
   evt.preventDefault();
-  scale += evt.deltaY * -0.01; // Изменение масштаба
-  scale = Math.min(Math.max(1, scale), 3); // Ограничение масштаба от 1 до 3
+  if (evt.deltaY < 0) {
+    scale += 0.1; // Увеличиваем масштаб
+  } else {
+    scale -= 0.1; // Уменьшаем масштаб
+  }
+  
+  // Ограничение масштаба от 0.5 до 3
+  scale = Math.min(Math.max(0.5, scale), 3);
   updateTransform();
 });
 
 // Обновление трансформации с учетом ограничений
 function updateTransform() {
-  image.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
-
+  // image.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+  image.style.transform = `translate(-50%, -50%) translate(${posX}px, ${posY}px) scale(${scale})`;
   // Ограничение перемещения по оси X
   const imageRect = image.getBoundingClientRect();
   const bgRect = background.getBoundingClientRect();
 
-  if (imageRect.left > bgRect.left) {
-    posX = bgRect.left;
-  }
-  if (imageRect.right < bgRect.right) {
-    posX = bgRect.right - imageRect.width;
-  }
+  // if (imageRect.left > bgRect.left) {
+  //   posX = bgRect.left;
+  // }
+  // if (imageRect.right < bgRect.right) {
+  //   posX = bgRect.right - imageRect.width;
+  // }
+
+  // if (imageRect.left > bgRect.left) {
+  //   posX = bgRect.left / 2; // Центрируем изображение
+  // }
+  // if (imageRect.right < bgRect.right) {
+  //   posX = bgRect.right ; // Центрируем изображение
+  // }
 
   // Ограничение перемещения по оси Y
-  if (imageRect.top > bgRect.top) {
-    posY = bgRect.top;
-  }
-  if (imageRect.bottom < bgRect.bottom) {
-    posY = bgRect.bottom - imageRect.height;
-  }
+  // if (imageRect.top > bgRect.top) {
+  //   posY = bgRect.top;
+  // }
+  // if (imageRect.bottom < bgRect.bottom) {
+  //   posY = bgRect.bottom - imageRect.height;
+  // }
+
+  // if (imageRect.top > bgRect.top) {
+  //   posY = bgRect.top ; // Центрируем изображение
+  // }
+  // if (imageRect.bottom < bgRect.bottom) {
+  //   posY = bgRect.bottom; // Центрируем изображение
+  //   console.log(imageRect.bottom )
+  // }
 
   // Обновляем трансформацию после применения ограничений
-  image.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+  // image.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+  image.style.transform = `translate(-50%, -50%) translate(${posX}px, ${posY}px) scale(${scale})`;
 }
 
 // Перемещение изображения

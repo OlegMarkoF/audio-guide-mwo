@@ -16,13 +16,23 @@ body, html {
   touch-action: none; /* Отключение жестов по умолчанию */
 }
 
-#image {
+/* #image {
   position: absolute;
   top: 0;
   left: 0;
   width: auto;
   height: 100vh;
-  transform-origin: top left; /* Центрирование точки масштабирования */
+  transform-origin: top left; 
+} */
+
+#image {
+  position: absolute;
+  top: 50%; /* Центрируем изображение по вертикали */
+  left: 50%; /* Центрируем изображение по горизонтали */
+  width: auto;
+  height: 100vh;
+  transform-origin: center; /* Устанавливаем центр как точку масштабирования */
+  transform: translate(-50%, -50%); /* Сдвигаем изображение на половину его ширины и высоты */
 }
 
 img {
