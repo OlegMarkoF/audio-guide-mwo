@@ -14,6 +14,7 @@ body, html {
   width: 100%;
   height: 100%;
   touch-action: none; /* Отключение жестов по умолчанию */
+  overflow: hidden;
 }
 
 /* #image {
@@ -33,6 +34,8 @@ body, html {
   height: 100vh;
   transform-origin: center; /* Устанавливаем центр как точку масштабирования */
   transform: translate(-50%, -50%); /* Сдвигаем изображение на половину его ширины и высоты */
+  border: 1px solid red;
+  transition: transform 0.2s;
 }
 
 img {
@@ -94,7 +97,7 @@ img {
   border-radius: 15px;
   background: rgba(255, 255, 255, 0.97);
   border: 1px solid rgba(59, 59, 59, 0.6);
-  box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.8);
   animation-name: animate;
   animation-duration: 0.9s
 }
@@ -118,12 +121,12 @@ img {
 
 .close_modal {
   position: absolute;
-  top: -50px;
+  top: -60px;
   left: 49.5%;
   color: #fff;
   font-weight: 400;
   transition: all 0.2s ease;
-  text-shadow: 3px 3px 3px #000;
+  text-shadow: 3px 3px 5px #000;
   font-size: 40px;
   line-height: 40px;
   cursor: pointer;
@@ -137,7 +140,11 @@ img {
   text-shadow: 1px 1px 3px #000;
 }
 
-
+.button__group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 
 .playButton,
 .pauseButton {
@@ -156,6 +163,15 @@ img {
   text-align: center;
   /* font-size: 22px; */
   outline: none;
+}
+
+.button_img {
+  width: 70%;
+  height: 70%;
+}
+
+.playButton img {
+  margin-left: 3px;
 }
 
 button:hover {

@@ -2,7 +2,7 @@ let scale = 1;
 let posX = 0;
 let posY = 0;
 
-const image = document.getElementById("image");
+const image = document.querySelector(".img__container");
 const background = document.getElementById("background");
 const playback = document.querySelectorAll(".playback");
 const screenContent = document.querySelector(".screen-content");
@@ -34,13 +34,12 @@ background.addEventListener("wheel", (evt) => {
 // Обновление трансформации с учетом ограничений
 function updateTransform() {
   // image.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
-  image.style.transform = `translate(-50%, -50%) translate(${posX}px, ${posY}px) scale(${scale})`;
+  // image.style.transform = `translate(-50%, -50%) translate(${posX}px, ${posY}px) scale(${scale})`;
   // Ограничение перемещения по оси X
-  const imageRect = image.getBoundingClientRect();
-  const bgRect = background.getBoundingClientRect();
-
+  const imageRect = image.getBoundingClientRect(); // габариты и координаты фонового изображения
+  const bgRect = background.getBoundingClientRect();  // высота и ширина области просмотра
   // if (imageRect.left > bgRect.left) {
-  //   posX = bgRect.left;
+  //   posX = bgRect.left; 
   // }
   // if (imageRect.right < bgRect.right) {
   //   posX = bgRect.right - imageRect.width;
@@ -71,6 +70,7 @@ function updateTransform() {
 
   // Обновляем трансформацию после применения ограничений
   // image.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+  
   image.style.transform = `translate(-50%, -50%) translate(${posX}px, ${posY}px) scale(${scale})`;
 }
 
@@ -113,6 +113,7 @@ background.addEventListener("touchstart", (evt) => {
   } else if (evt.touches.length === 2) {
     // Если два пальца на экране
     initialDistance = getDistance(evt.touches[0], evt.touches[1]);
+    
     isDragging = false; // Остановка перетаскивания при использовании двух пальцев
   }
 });
@@ -132,10 +133,9 @@ background.addEventListener("touchmove", (evt) => {
     } else {
       scale -= 0.1; // Уменьшаем масштаб
     }
-    
     // Ограничение масштаба от 0.5 до 3
     scale = Math.min(Math.max(0.5, scale), 3);
-    // Ограничиваем масштаб от 1 до 3
+    
     initialDistance = currentDistance; // Обновляем начальное расстояние
     updateTransform();
     evt.preventDefault(); // Предотвращаем прокрутку страницы
@@ -149,7 +149,9 @@ background.addEventListener("touchend", () => {
 function getDistance(touch1, touch2) {
   const dx = touch2.clientX - touch1.clientX;
   const dy = touch2.clientY - touch1.clientY;
+  console.log(dx)
   return Math.sqrt(dx * dx + dy * dy); // Расстояние между двумя касаниями
+  
 }
 
 let isTouching = false;

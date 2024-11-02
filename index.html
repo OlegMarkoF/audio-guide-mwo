@@ -46,9 +46,11 @@
       <span class="close_modal">✗</span>
       <div class="screen-content">
         <div class="audiotrack"></div>
-        <button class="playButton">&#9654;</button>
-        <button class="pauseButton">&#9208;</button>
-        <input type="range" class="volumeControl" min="0" max="1" step="0.1" value="1">
+        <div class="button__group">
+          <button class="playButton"><img class="button_img" src="./content/img/воспроизведение-48.png" alt="play"></button>
+          <button class="pauseButton"><img class="button_img" src="./content/img/пауза-48.png" alt="pause"></button>
+          <input type="range" class="volumeControl" min="0" max="1" step="0.1" value="1">
+        </div>
         
         <div class="progressAudio">
           <p class="currentTime__text"></p>
@@ -61,7 +63,8 @@
     <!-- <div id="caption"></div>  <- добавить подпись к фото -->
   </div>
 
-  <script src="./scripts/script.js"></script>
+  <!-- <script src="./scripts/script.js"></script> -->
+  <script src="./scripts/drag.js"></script>
 </body>
 
 </html>
