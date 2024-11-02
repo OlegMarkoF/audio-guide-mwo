@@ -34,8 +34,8 @@ body, html {
   height: 100vh;
   transform-origin: center; /* Устанавливаем центр как точку масштабирования */
   transform: translate(-50%, -50%); /* Сдвигаем изображение на половину его ширины и высоты */
-  border: 1px solid red;
-  transition: transform 0.2s;
+  /* border: 1px solid red; */
+  transition: transform 0.1s;
 }
 
 img {
